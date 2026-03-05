@@ -1,0 +1,27 @@
+services:
+  teams-browser:
+    image: barjola/microsoft-teams-keepalive:latest
+    container_name: teams-keepalive
+    restart: unless-stopped
+    ports:
+      - "1144:1144"
+      - "5000:5000"
+    volumes:
+      - ./chromium_data/profile1:/data/profile1
+      - ./chromium_data/profile2:/data/profile2
+    environment:
+      - APP_LANG=en-EN
+      - DUAL_ACCOUNTS=true
+      - TELEGRAM_BOT_TOKEN=BOT_TOKEN
+      - TELEGRAM_CHAT_ID=CHAT_ID
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    shm_size: "512mb"
+    deploy:
+      resources:
+        limits:
+          memory: 1536M

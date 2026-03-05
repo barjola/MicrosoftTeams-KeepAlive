@@ -1,0 +1,6 @@
+.git
+.github
+.gitignore
+chromium_data/
+*.md
+docker-compose.yml
